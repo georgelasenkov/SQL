@@ -15,7 +15,7 @@
 ### 1️⃣ Создаем таблицы
 #### <h3 align="center">brands</h3>
 <details>
-  <summary>запрос</summary>
+  <summary>Запрос</summary>
 
   ```
 CREATE TABLE IF NOT EXISTS brands (
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS brands (
 
 <h3 align="center">customers</h3>
 <details>
-  <summary>запрос</summary>
+  <summary>Запрос</summary>
 
   ```
 CREATE TABLE IF NOT EXISTS customers (
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS customers (
 
 <h3 align="center">vehicles</h3>
 <details>
-  <summary>запрос</summary>
+  <summary>Запрос</summary>
 
   ```
 CREATE TABLE IF NOT EXISTS vehicles (
@@ -79,6 +79,10 @@ CREATE TABLE IF NOT EXISTS vehicles (
 | vehicle_id | customer_id | brand_id | model        | body_type | production_date | price  | mileage | color  | powertrain | transmission | fuel_type | engine_capacity | horsepower | max_speed | purchase_date |
 |----|-------------|----------|--------------|-----------|-----------------|--------|---------|--------|------------|--------------|-----------|-----------------|------------|-----------|----------------|
 
+#
+<h3 align="center"><details><summary><h3>Схема связи таблиц</h3></summary><img src="https://github.com/georgelasenkov/SQL/blob/main/tables_scheme.png?raw=true"></details></h3>
+
+#
 ### 2️⃣ Вставляем значения в таблицы
 #### <h3 align="center">brands</h3>
 <details>
@@ -427,3 +431,24 @@ INSERT INTO vehicles (customer_id, brand_id, model, body_type, production_date, 
 | 75 | 27          | 5        | Taycan               | sedan     | 2022-04-04      | 143990  | 8542    | green   | AWD        | automatic    | electric   | 0.0             | 616        | 250       | 2024-11-06 09:30:00 |
 | 76 | 13          | 1        | Supra                | coupe     | 2022-07-09      | 40900   | 25697   | blue    | RWD        | automatic    | petrol    | 3.0             | 382        | 250       | 2024-04-22 18:00:00 |
 </details>
+
+#
+### 3️⃣ Редактируем значения в таблице
+Допустим, что в нашей БД введены неправильные данные покупателя Мазды RX-7, нужно это исправить!
+
+Ищем данные клиента, который приобрел RX-7
+<details>
+  <summary>Запрос</summary>
+
+  ```
+SELECT c.*
+FROM customers c
+JOIN vehicles v ON c.customer_id = v.customer_id
+WHERE model = 'RX-7';
+  ```
+</details>
+Результат:
+
+| customer_id | first_name | last_name  | age | sex    |
+|--------------|------------|------------|-----|--------|
+| 17           | Evelyn     | Thompson   | 24  | female |
