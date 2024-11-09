@@ -476,3 +476,78 @@ WHERE customer_id = 17;
 | customer_id | first_name | last_name  | age | sex    |
 |--------------|------------|------------|-----|--------|
 | 17           | George     | Lasenkov   | 28  | male   |
+#
+
+<h2 align="center">Запросы на выборку данных</h2>
+
+### 1️⃣ Вывести топ 10 брендов по количеству проданных автомобилей за все время и кол-во проданных моделей. Отсортировать по уменьшению количества проданных автомобилей.
+<details>
+  <summary>Запрос</summary>
+
+  ```sql
+SELECT brand_name, COUNT(vehicle_id) vehicles_count 
+FROM brands b
+JOIN vehicles v ON b.id = v.brand_id
+GROUP BY brand_name
+ORDER BY vehicles_count DESC
+LIMIT 10;
+  ```
+</details>
+Результат:
+
+| brand_name     | vehicles_count |
+|----------------|--------|
+| Ford           | 6      |
+| BMW            | 6      |
+| Volkswagen     | 5      |
+| Nissan         | 5      |
+| Audi           | 5      |
+| Dodge          | 4      |
+| Porsche        | 4      |
+| Chevrolet      | 4      |
+| Ferrari        | 3      |
+| Aston Martin   | 3      |
+
+### 2️⃣ Найти кол-во проданных автомобилей за последний месяц и их общую стоимость.
+<details>
+  <summary>Запрос</summary>
+
+  ```sql
+SELECT 	COUNT(vehicle_id) AS vehicles_sold, 
+		SUM(price) AS total_price
+FROM vehicles
+WHERE purchase_date BETWEEN '2024-10-09' AND '2024-11-09';
+  ```
+</details>
+Результат:
+
+| vehicles_sold | total_price |
+|---------------|-------------|
+| 11            | 939390      |
+
+### 3️⃣ Для каждого типа кузова найти среднюю стоимость авто. Отсортировать по уменьшению стоимости. Среднюю стоимость округлить до двух значений после запятой.
+<details>
+  <summary>Запрос</summary>
+
+  ```sql
+SELECT 	body_type, 
+		ROUND(AVG(price), 2) AS average_price
+FROM vehicles
+GROUP BY body_type
+ORDER BY average_price DESC;
+  ```
+</details>
+
+Результат:
+
+| body_type     | average_price |
+|---------------|---------------|
+| coupe         | 218256.48     |
+| roadster      | 141968.89     |
+| cabriolet     | 128790.00     |
+| SUV           | 86558.33      |
+| pickup        | 54190.00      |
+| CUV           | 51548.13      |
+| sedan         | 43391.13      |
+| wagon         | 35990.00      |
+| hatchback     | 29736.92      |
