@@ -17,7 +17,7 @@
 <details>
   <summary>Запрос</summary>
 
-  ```
+  ```sql
 CREATE TABLE IF NOT EXISTS brands (
 	id SERIAL PRIMARY KEY,
 	brand_name VARCHAR(30),
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS brands (
 <details>
   <summary>Запрос</summary>
 
-  ```
+  ```sql
 CREATE TABLE IF NOT EXISTS customers (
 	customer_id SERIAL PRIMARY KEY,
 	first_name VARCHAR(30) NOT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS customers (
 <details>
   <summary>Запрос</summary>
 
-  ```
+  ```sql
 CREATE TABLE IF NOT EXISTS vehicles (
 	vehicle_id SERIAL PRIMARY KEY,
 	customer_id INT NOT NULL REFERENCES customers (customer_id),
@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS vehicles (
 <details>
   <summary>Запрос</summary>
 
-  ```
+  ```sql
 INSERT INTO brands (brand_name, country)
 	VALUES
 		('Toyota', 'Japan'),
@@ -149,7 +149,7 @@ INSERT INTO brands (brand_name, country)
 <details>
   <summary>Запрос</summary>
 
-  ```
+  ```sql
 INSERT INTO customers (first_name, last_name, age, sex)
 	VALUES
 		('Emma', 'Smith', 18, 'female'),
@@ -267,7 +267,7 @@ INSERT INTO customers (first_name, last_name, age, sex)
 <details>
   <summary>Запрос</summary>
 
-  ```
+  ```sql
 INSERT INTO vehicles (customer_id, brand_id, model, body_type, production_date, price, mileage, color, powertrain, transmission, fuel_type, engine_capacity, horsepower, max_speed, purchase_date)
 	VALUES
 		(14, 3, 'Chevelle SS', 'coupe', '1970-12-08', 65990, 93576, 'black', 'RWD', 'manual', 'petrol', 7.4, 450, 209, '2024-03-12 11:45:12'),
@@ -440,7 +440,7 @@ INSERT INTO vehicles (customer_id, brand_id, model, body_type, production_date, 
 <details>
   <summary>Запрос</summary>
 
-  ```
+  ```sql
 SELECT c.*
 FROM customers c
 JOIN vehicles v ON c.customer_id = v.customer_id
@@ -457,7 +457,7 @@ WHERE model = 'RX-7';
 <details>
   <summary>Запрос</summary>
 
-  ```
+  ```sql
 UPDATE customers
 SET
 	first_name = 'George',
