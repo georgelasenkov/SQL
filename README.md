@@ -638,3 +638,45 @@ ORDER BY percentage DESC
 | green   | 7        | 9.21       |
 | yellow  | 5        | 6.58       |
 | orange  | 3        | 3.95       |
+
+### 7️⃣ Какой тип кузова наиболее популярен у покупателей с самым низким средним возрастом.
+<details>
+  <summary>Запрос</summary>
+
+  ```sql
+SELECT v.body_type, 
+	ROUND(AVG(c.age)) AS average_age
+FROM vehicles v
+JOIN customers c ON v.customer_id = c.customer_id
+GROUP BY v.body_type
+ORDER BY 2 ASC
+LIMIT 1
+  ```
+</details>
+Результат:
+
+| body_type | average_age |
+|-----------|-------------|
+| sedan     | 30          |
+
+### 8️⃣ Сравнить бензиновые и электрические хетчбеки. В результат вывести группировку по типу топлива, а также средние значения по цене, лошадиным силам и максимальной скорости.
+<details>
+  <summary>Запрос</summary>
+
+  ```sql
+SELECT fuel_type, 
+	ROUND(AVG(price), 2) AS average_price, 
+	ROUND(AVG(horsepower), 2) AS average_horsepower, 
+	ROUND(AVG(max_speed), 2) AS average_top_speed
+FROM vehicles
+WHERE body_type = 'hatchback' AND fuel_type NOT IN ('diesel', 'hybrid')
+GROUP BY fuel_type
+ORDER BY 2 ASC
+  ```
+</details>
+Результат:
+
+| fuel_type | average_price | average_horsepower | average_top_speed  |
+|-----------|---------------|--------------------|--------------------|
+| petrol    | 21620.00      | 170.57             | 207.14             |
+| electric  | 37990.00      | 182.67             | 155.67             |
