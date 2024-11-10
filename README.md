@@ -514,7 +514,7 @@ LIMIT 10;
 
   ```sql
 SELECT 	COUNT(vehicle_id) AS vehicles_sold, 
-		SUM(price) AS total_price
+	SUM(price) AS total_price
 FROM vehicles
 WHERE purchase_date BETWEEN '2024-10-09' AND '2024-11-09';
   ```
@@ -531,13 +531,12 @@ WHERE purchase_date BETWEEN '2024-10-09' AND '2024-11-09';
 
   ```sql
 SELECT 	body_type, 
-		ROUND(AVG(price), 2) AS average_price
+	ROUND(AVG(price), 2) AS average_price
 FROM vehicles
 GROUP BY body_type
 ORDER BY average_price DESC;
   ```
 </details>
-
 Результат:
 
 | body_type     | average_price |
@@ -551,3 +550,91 @@ ORDER BY average_price DESC;
 | sedan         | 43391.13      |
 | wagon         | 35990.00      |
 | hatchback     | 29736.92      |
+
+### 4️⃣ Посчитать общую выручку от продаж по месяцам, кол-во проданных авто и среднюю стоимость за каждый месяц.
+<details>
+  <summary>Запрос</summary>
+
+  ```sql
+SELECT 	DATE_PART('month', purchase_date) AS month_number,
+	COUNT(vehicle_id) AS quantity,
+	SUM(price) AS total_price,
+	ROUND(AVG(price), 2) AS average_price
+FROM vehicles
+GROUP BY month_number
+ORDER BY month_number;
+  ```
+</details>
+Результат:
+
+| month_number | quantity | total_price | average_price |
+|--------------|----------|-------------|---------------|
+| 1            | 8        | 1450409   | 181301.13    |
+| 2            | 7        | 349500     | 49928.57     |
+| 3            | 6        | 336140     | 56023.33     |
+| 4            | 9        | 1309980   | 145553.33    |
+| 5            | 7        | 543290     | 77612.86     |
+| 6            | 8        | 401634     | 50204.25     |
+| 7            | 6        | 431840     | 71973.33     |
+| 8            | 8        | 377730     | 47216.25     |
+| 9            | 5        | 2610470   | 522094.00    |
+| 10           | 7        | 538830     | 76975.71     |
+| 11           | 5        | 437550     | 87510.00     |
+
+### 5️⃣ Найти цвета автомобилей, которые чаще всего покупали летом. В результат вывести только топ-3 цвета.
+<details>
+  <summary>Запрос</summary>
+
+  ```sql
+SELECT 	color, 
+	COUNT(vehicle_id) AS cars_count
+FROM vehicles
+WHERE purchase_date BETWEEN '2024-06-01' AND '2024-09-01'
+GROUP BY color
+ORDER BY cars_count DESC
+LIMIT 3;
+  ```
+</details>
+Результат:
+
+| color | cars_count |
+|-------|------------|
+| black | 5          |
+| red   | 4          |
+| white | 4          |
+
+### 6️⃣ Найти общее количество проданных автомобилей по цветам, вывести процетное соотношение каждого цвета к общему количеству проданных автомобилей.
+<details>
+  <summary>Запрос</summary>
+
+  ```sql
+WITH subq_1 AS (
+	SELECT color,
+		COUNT(*) AS quantity
+	FROM vehicles
+	GROUP BY color
+),
+subq_2 AS (
+SELECT color, 
+	quantity, 
+	ROUND((quantity * 100)::NUMERIC / (SELECT COUNT(*) FROM vehicles), 2) AS percentage
+FROM subq_1
+)
+
+SELECT color, quantity, percentage
+FROM subq_2
+ORDER BY percentage DESC
+  ```
+</details>
+Результат:
+
+| Color   | Quantity | Percentage |
+|---------|----------|------------|
+| black   | 15       | 19.74      |
+| red     | 13       | 17.11      |
+| silver  | 12       | 15.79      |
+| white   | 11       | 14.47      |
+| blue    | 10       | 13.16      |
+| green   | 7        | 9.21       |
+| yellow  | 5        | 6.58       |
+| orange  | 3        | 3.95       |
