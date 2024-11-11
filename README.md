@@ -516,7 +516,7 @@ LIMIT 10;
 SELECT 	COUNT(vehicle_id) AS vehicles_sold, 
 	SUM(price) AS total_price
 FROM vehicles
-WHERE purchase_date BETWEEN '2024-10-09' AND '2024-11-09';
+WHERE purchase_date BETWEEN '2024-10-09' AND '2024-11-10';
   ```
 </details>
 Результат:
@@ -706,3 +706,27 @@ ORDER BY 3
 | Ella       | Clark     | Lada         | Niva     | 9890      | 9593.30    |
 | Mia        | Jackson   | Land Rover   | Defender | 85990     | 83410.30   |
 | Chloe      | Allen     | Porsche      | Taycan   | 143990    | 139670.30  |
+
+### 🔟 Найти клиентов мужского пола моложе 30 лет, которые купили более 1 автомобиля в нашем салоне. В результат вывести имя, фамилию и кол-во автомобилей. Отсортировать по фамилии в алфавитном порядке.
+<details>
+  <summary>Запрос</summary>
+
+  ```sql
+SELECT c.first_name,
+	c.last_name,
+	COUNT (v.customer_id) cars_bought
+FROM customers c
+JOIN vehicles v ON c.customer_id = v.customer_id
+WHERE c.sex = 'male' AND c.age < 30
+GROUP BY 1, 2
+HAVING COUNT (v.customer_id) > 1
+ORDER BY 2
+  ```
+</details>
+Результат:
+
+| first_name | last_name | cars_bought |
+|------------|-----------|-------------|
+| Levi       | Campbell  | 2           |
+| Samuel     | Hall      | 2           |
+| Noah       | Jones     | 2           |
