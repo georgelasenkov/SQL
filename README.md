@@ -100,7 +100,7 @@ INSERT INTO brands (brand_name, country)
 		('Renault', 'France'),
 		('Lada', 'Russia'),
 		('Cupra', 'Spain'),
-		('Ford', 'Usa'),
+		('Ford', 'USA'),
 		('Nissan', 'Japan'),
 		('Audi', 'Germany'),
 		('Ferrari', 'Italy'),
@@ -680,3 +680,29 @@ ORDER BY 2 ASC
 |-----------|---------------|--------------------|--------------------|
 | petrol    | 21620.00      | 170.57             | 207.14             |
 | electric  | 37990.00      | 182.67             | 155.67             |
+
+### 9️⃣ Для всех девушек, которые покупали авто с зеленым цветом кузова сделать скидку 3%. Отсортировать по марке в алфавитном порядке.
+<details>
+  <summary>Запрос</summary>
+
+  ```sql
+SELECT 	c.first_name,
+	c.last_name,
+	b.brand_name,
+	v.model,
+	v.price old_price,
+	v.price * 0.97 new_price
+FROM vehicles v
+JOIN brands b ON v.brand_id = b.id
+JOIN customers c ON v.customer_id = c.customer_id
+WHERE color = 'green' and sex = 'female'
+ORDER BY 3
+  ```
+</details>
+Результат:
+
+| first_name | last_name | brand_name   | model    | old_price | new_price  |
+|------------|-----------|--------------|----------|-----------|------------|
+| Ella       | Clark     | Lada         | Niva     | 9890      | 9593.30    |
+| Mia        | Jackson   | Land Rover   | Defender | 85990     | 83410.30   |
+| Chloe      | Allen     | Porsche      | Taycan   | 143990    | 139670.30  |
