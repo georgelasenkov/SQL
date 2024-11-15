@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS vehicles (
 |----|-------------|----------|--------------|-----------|-----------------|--------|---------|--------|------------|--------------|-----------|-----------------|------------|-----------|----------------|
 
 #
-<h3 align="center"><details><summary><h3>Схема связи таблиц</h3></summary><img src="https://github.com/georgelasenkov/SQL/blob/main/tables_scheme.png?raw=true"></details></h3>
+<h3 align="center"><details><summary><h3>ERD схема таблиц</h3></summary><img src="https://github.com/georgelasenkov/SQL/blob/main/tables_scheme.png?raw=true"></details></h3>
 
 #
 ### 2️⃣ Вставляем значения в таблицы
