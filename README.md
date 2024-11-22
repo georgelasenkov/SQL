@@ -730,3 +730,31 @@ ORDER BY 2
 | Levi       | Campbell  | 2           |
 | Samuel     | Hall      | 2           |
 | Noah       | Jones     | 2           |
+
+### 1️⃣1️⃣ Найти клиентов, которые купили авто с типом кузова "SUV". Вывести их имя, фамилию, пол, марку и модель автомобиля. Также найти общую сумму для каждого пола, которую потратили покупатели на авто с этим типом кузова.
+<details>
+  <summary>Запрос</summary>
+
+  ```sql
+SELECT first_name, 
+	last_name, 
+	sex, 
+	brand_name, 
+	model, 
+	SUM(price) OVER (PARTITION BY sex) AS sex_sum 
+FROM customers
+JOIN vehicles v USING(customer_id)
+JOIN brands b ON v.brand_id = b.id
+WHERE body_type = 'SUV'
+  ```
+</details>
+Результат:
+
+| first_name | last_name | sex    | brand_name    | model                  | sex_sum |
+|------------|-----------|--------|----------------|-----------------------|---------|
+| Natalie    | Mitchell  | female | Lamborghini     | Urus                  | 296380  |
+| Ella       | Clark     | female | Lada            | Niva                  | 296380  |
+| Mia        | Jackson   | female | Land Rover      | Defender              | 296380  |
+| Dylan      | Lewis     | male   | Toyota          | Land Cruiser          | 222970  |
+| Henry      | Robinson  | male   | Land Rover      | Range Rover Sport     | 222970  |
+| Samuel     | Hall      | male   | Ford            | Bronco Raptor         | 222970  |
