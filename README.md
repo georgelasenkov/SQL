@@ -758,3 +758,33 @@ WHERE body_type = 'SUV'
 | Dylan      | Lewis     | male   | Toyota          | Land Cruiser          | 222970  |
 | Henry      | Robinson  | male   | Land Rover      | Range Rover Sport     | 222970  |
 | Samuel     | Hall      | male   | Ford            | Bronco Raptor         | 222970  |
+
+### 1️⃣2️⃣ Найти все седаны. Для моделей, у которых пробег боле 100 000 и цена более 20 000, скрутить пробег на 20%.
+<details>
+  <summary>Запрос</summary>
+
+  ```sql
+SELECT model, 
+	price, 
+	mileage, 
+	CASE
+		WHEN mileage > 100000 AND price > 20000 THEN ROUND(mileage * 0.8)
+		ELSE mileage
+	END AS new_mileage
+FROM vehicles
+WHERE body_type = 'sedan'
+ORDER BY 4 DESC
+  ```
+</details>
+Результат:
+
+| model            | price | mileage | new_mileage |
+|-------------------|-------|---------|-------------|
+| 190E              | 8990  | 212345  | 212345      |
+| 156               | 8990  | 123860  | 123860      |
+| 2002              | 39990 | 145830  | 116664      |
+| 335d              | 24690 | 136890  | 109512      |
+| M550d xDrive      | 64990 | 87643   | 87643       |
+| Vesta Sport       | 13299 | 84438   | 84438       |
+| Giulia            | 42190 | 56732   | 56732       |
+| Taycan            | 143990| 8542    | 8542        |
